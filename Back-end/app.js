@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 const PORT = 5000
 const bcrypt=require('bcryptjs')
 const User=require('./models/User')
+//const cors = require('cors')
+const jwt = require('jsonwebtoken')
+const JWT_SECRET='fsdfkdsjfksdljfsdk'
 
 mongoose.connect('mongodb+srv://Ramzan:oYuGxIQ5Ok4A5WCb@cluster0.edivkcm.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser:true,
  useUnifiedTopology: true})
@@ -19,32 +22,7 @@ mongoose.connection.on('connected',()=>{
 
 
 app.use(express.json())
-// app.post('/signup',async(req,res)=>{
-//     const {email,password} =req.body
-//     try{
-//     console.log(req.body)
-//     if(!email|| !password){
-//         return res.status(422).json({error:"Please fill all required filled"})
-//     }
-//     const User= await User.findOne({email})
-//     if(User){
-//     return res.status(422).json({error:"User already exist that email"})
-// }
-//     const hashpassword= await bcrypt.hash(password,12)
-//     new User({
-//         email,
-//         password:hashpassword
-//        }).save
-//        res.status(200).json({massage:"User hass successfully registerd now you can login"})
-   
-    
-  
-   
-//     }
-//     catch(err){
-//         console.log(err)
-//     }
-// })
+
 
 app.post('/signup',async (req,res)=>{
        const {email,password} = req.body
@@ -94,6 +72,30 @@ app.post('/signup',async (req,res)=>{
         }
     
     })
+
+    const requireLogin = (req,res,next)=>{
+            const {authorization} = req.headers
+            if(!authorization){
+               return res.status(401).json({error:"you must be logged in"})
+            }
+            try{
+               const {userId} =  jwt.verify(authorization,JWT_SECRET)
+                req.user = userId
+                next()  
+            }catch(err){
+                return res.status(401).json({error:"you must be logged in"})
+            }
+            
+        }
+
+    app.get('/gettodos',requireLogin,async (req,res)=>{
+
+        res.json({message:req.user})
+        //    const data =  await Todo.find({
+        //         todoBy:req.user
+        //     })
+        //     res.status(200).json({message:data})
+        })
 
 app.listen(PORT,()=>{
     console.log('server running on |',PORT)
