@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const PORT = 5000
 const bcrypt=require('bcryptjs')
 const User=require('./models/User')
+const Todo=require('./models/Todo')
 //const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET='fsdfkdsjfksdljfsdk'
@@ -88,14 +89,27 @@ app.post('/signup',async (req,res)=>{
             
         }
 
-    app.get('/gettodos',requireLogin,async (req,res)=>{
-
-        res.json({message:req.user})
-        //    const data =  await Todo.find({
-        //         todoBy:req.user
-        //     })
-        //     res.status(200).json({message:data})
-        })
+    app.post('/createtodo',requireLogin,async(req,res)=>{
+       const data=await new Todo({
+            todo:req.body.todo,
+            todoBy:req.user
+        }
+        ).save()
+        res.status(201).json({message:data})
+    })
+    app.post('/gettodos',requireLogin,async (req,res)=>{
+        const data =  await Todo.find({
+            todoBy:req.user
+         })
+         res.status(200).json({message:data})
+     })
+     
+     app.delete('/remove/:id',requireLogin,async (req,res)=>{
+        const removedTodo = await Todo.findOneAndRemove({_id:req.params.id})
+        res.status(200).json({message:removedTodo})
+     })
+    
+    
 
 app.listen(PORT,()=>{
     console.log('server running on |',PORT)
@@ -125,6 +139,7 @@ app.listen(PORT,()=>{
 // const bcrypt = require('bcryptjs')
 // const cors = require('cors')
 // const jwt = require('jsonwebtoken')
+
 // const {JWT_SECRET,MOGOURI} = require('./config/keys')
 // const Todo = require('./models/todo')
 
@@ -132,6 +147,8 @@ app.listen(PORT,()=>{
 //     useNewUrlParser:true,
 //     useUnifiedTopology: true
 // })
+// mongoose.connect('mongodb+srv://Ramzan:oYuGxIQ5Ok4A5WCb@cluster0.edivkcm.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser:true,
+//   useUnifiedTopology: true})
 
 // mongoose.connection.on('connected',()=>{
 //     console.log('connected to mongo yeahhh')
