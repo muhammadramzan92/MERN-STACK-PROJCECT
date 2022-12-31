@@ -2,7 +2,7 @@ import React from 'react'
 import {useState} from 'react'
 import {signinUser} from '../reducers/authReducer'
 import {useDispatch,useSelector} from 'react-redux'
-import { NavLink, useNavigate} from "react-router-dom";
+import { NavLink} from "react-router-dom";
 export default function SignIn() {
 
    
@@ -14,7 +14,7 @@ export default function SignIn() {
         });
         
         const dispatch = useDispatch()
-       const navigateto= useNavigate(); 
+      
       const handleChange = (event) => {
         event.preventDefault();
         const { name, value } = event.target;
@@ -60,7 +60,7 @@ export default function SignIn() {
                        
                         <div className="form-control">
                             <label>Password</label>
-                            <input type="text" id="password1" name='password' onChange={handleChange} placeholder="Enter Password" />
+                            <input type="password" id="password1" name='password' onChange={handleChange} placeholder="Enter Password" />
                             <small>Error massage</small>
                         </div>
                         <button type='submit'>Login</button>
@@ -70,21 +70,7 @@ export default function SignIn() {
                 </div>
 
 
-            {/* <label htmlFor="Email">Email</label>
-            <input 
-            type="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
-            />
-            <label htmlFor="Password">password</label>
-            <input 
-            type="password"
-            value={password}
-            onChange={(e)=>setPassword(e.target.value)}
-            />
-           
-            <button className="btn #ff4081 pink accent-2" onClick={()=>authenticate()}>Signin</button>
-            <div className="goto_singup"><NavLink to="signup"><button>got to Sign-Up</button></NavLink>  </div> */}
+            
         </div>
     )
   

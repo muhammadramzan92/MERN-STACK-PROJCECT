@@ -1,7 +1,7 @@
 
 import {useEffect} from 'react';
 import './App.css';
-import Auth from './components/Auth'
+
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Todo from './components/Todo';
@@ -14,10 +14,10 @@ function App() {
   useEffect(()=>{
     dispatch(addToken())
   },[])
-  {
-    token ? <Todo /> :<SignIn />
+  // {
+  //   token ? <Todo /> :<SignIn />
 
-  }  
+  // }  
   console.log("token",token)
   return (
     <>
@@ -37,37 +37,5 @@ function App() {
 
 export default App;
 
-
-
-{/* <div className="App">
-    {
-      token ? <Todo /> :<Auth />
-
-    }  
-      
-    </div> */}
-
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// // import Welcome from './components/Welcome';
-
-// function App() {
-  
-   
-//   return (
-//     <>
-//       <Router>
-//        <Routes>
-          
-//            <Route exact path='/signup' element={<Userform  />}></Route>
-//           <Route path='/' element={<Login />}></Route>
-//           {/* <Route path='/welcome' element={<Welcome />}></Route>
-//         <Route path='*' element={<Errorpage />}></Route> */}
-//          </Routes>
-//      </Router> 
-//     </>
-//   );
-// }
-
-// export default App;
 
 
