@@ -16,7 +16,7 @@ export default function SignIn() {
         const dispatch = useDispatch()
       
       const handleChange = (event) => {
-        event.preventDefault();``
+       
         const { name, value } = event.target;
         console.log(value);
         const new_value = (name === "email") ? value.toLowerCase() : value;
@@ -29,7 +29,7 @@ export default function SignIn() {
       }
     
         const handleSubmit1 = (e) => {
-          e.preventDefault()
+         
        
          
           const {email,password}=logUser

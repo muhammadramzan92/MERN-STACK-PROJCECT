@@ -7,10 +7,11 @@ const User=require('./models/User')
 const Todo=require('./models/Todo')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
+const {JWT_SECRET,MOGOURI} = require('./config/keys')
 const JWT_SECRET='fsdfkdsjfksdljfsdk'
 app.use(cors())
 mongoose.set('strictQuery', true);
-mongoose.connect('mongodb+srv://Ramzan:oYuGxIQ5Ok4A5WCb@cluster0.edivkcm.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser:true,
+mongoose.connect(MOGOURI, {useNewUrlParser:true,
  useUnifiedTopology: true}
  )
 
@@ -116,7 +117,7 @@ if(process.env.NODE_ENV=='production'){
     const path = require('path')
 
     app.get('/',(req,res)=>{
-        app.use(express.static(path.resolve(__dirname,'client','build')))
+        app.use(express.static(path.resolve(__dirname,'front-end','build')))
         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
     })
 }
