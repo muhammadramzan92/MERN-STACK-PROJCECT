@@ -105,28 +105,7 @@ function Signup() {
 
 
 
-{/*     
-    <label htmlFor="Email">Email</label>
-    <input 
-    type="email"
-    value={email}
-    onChange={(e)=>setEmail(e.target.value)}
-    />
-    <label htmlFor="Password">password</label>
-    <input 
-    type="password"
-    value={password}
-    onChange={(e)=>setPassword(e.target.value)}
-    
-    />
-   
 
-    {
-        auth ==="signin" ?
-        <h6 onClick={()=>setAuth('signup')}>Dont have an account ?</h6>:
-        <h6 onClick={()=>setAuth('signin')}>Already have an account?</h6>
-    }
-    <button className="btn #ff4081 pink accent-2" onClick={()=>authenticate()}>SignUp</button> */}
 </div>
 )
  
