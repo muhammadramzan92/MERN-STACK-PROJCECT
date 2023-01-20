@@ -8,8 +8,10 @@ const Todo=require('./models/Todo')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET='fsdfkdsjfksdljfsdk'
+
 app.use(cors())
 mongoose.set('strictQuery', true);
+
 mongoose.connect('mongodb+srv://Ramzan:oYuGxIQ5Ok4A5WCb@cluster0.edivkcm.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser:true,
  useUnifiedTopology: true}
  )
@@ -93,12 +95,30 @@ app.post('/signup',async (req,res)=>{
         }
 
     app.post('/createtodo',requireLogin,async(req,res)=>{
-       const data=await new Todo({
-            todo:req.body.todo,
-            todoBy:req.user
-        }
-        ).save()
-        res.status(201).json({message:data})
+        console.log("data from router",req.body)
+        const {discription,ActivityType,duration,date} = req.body
+        // let result = await Todo({discription,ActivityType,duration,date})
+        // let result2 = await result.save()
+
+        const data=await new Todo({
+            discription:discription,
+            ActivityType:ActivityType,
+            duration:duration,
+            date:date,
+                todoBy:req.user
+            }
+            ).save()
+            res.status(201).json({message:data})
+
+    //    const data=await new Todo({
+    //     discription:req.body.discription,
+    //     ActivityType:req.body.ActivityType,
+    //     duration:req.body.duration,
+    //     data:req.body.data,
+    //         todoBy:req.user
+    //     }
+    //     ).save()
+    //     res.status(201).json({message:data})
     })
     app.get('/gettodos',requireLogin,async (req,res)=>{
         const data =  await Todo.find({
@@ -106,6 +126,30 @@ app.post('/signup',async (req,res)=>{
          })
          res.status(200).json({message:data})
      })
+
+    //  app.patch('/gettodos/:id',requireLogin,async (req,res)=>{
+    //     console.log("req.body msg::",req.body)
+    //     const data =  await Todo.updateOne(req.params.id, {$set: req.body},{new: true});
+    //      res.status(200).json({message:data})
+    //  })
+
+
+     ////
+     app.patch('/update/:id',requireLogin, async (req, res) => {
+        console.log("req.body msg::",req.body)
+        try {
+           
+            // const updatedTodo = await Todo.updateOne({_id: req.params.id}, {$set: req.body},{new: true});
+            const updatedTodo = await Todo.findByIdAndUpdate({_id: req.params.id}, {$set: req.body},{new: true});
+          if(!updatedTodo) return res.status(404).json({ message: 'Todo not found' });
+          res.json(updatedTodo);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      });
+    
+     
+    
      
      app.delete('/remove/:id',requireLogin,async (req,res)=>{
         const removedTodo = await Todo.findOneAndRemove({_id:req.params.id})
@@ -125,15 +169,7 @@ if(process.env.NODE_ENV=='production'){
 app.listen(PORT,()=>{
     console.log('server running on |',PORT)
 })
-
-
-
-
-
-
-
-
-
-
-
+function newFunction() {
+    require("donenv").config()
+}
 

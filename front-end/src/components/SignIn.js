@@ -16,7 +16,7 @@ export default function SignIn() {
         const dispatch = useDispatch()
       
       const handleChange = (event) => {
-        event.preventDefault();``
+        event.preventDefault();
         const { name, value } = event.target;
         console.log(value);
         const new_value = (name === "email") ? value.toLowerCase() : value;
@@ -49,18 +49,20 @@ export default function SignIn() {
             {error && 
             <h5>{error}</h5>
             }
-
-            <div className="container">
+            <div className="my-image">
+              <img src="../public/computer-login-concept-illustration_114360-7962.webp" alt="" className="the-image" />
+            </div>
+            <div className="my-container">
                     <form action="" id="form1" className="form" onSubmit={handleSubmit1} name='loginform'>
-                        <div className="form-control">
+                        <div className="my-form-control">
                             <label>UserEmail</label>
                             <input type="email" id="username1" name='email' onChange={handleChange} placeholder="Enter Email" />
                             <small>Error massage</small>
                         </div>
                        
-                        <div className="form-control">
+                        <div className="my-form-control">
                             <label>Password</label>
-                            <input type="password" id="password1" name='password' onChange={handleChange} placeholder="Enter Password" />
+                            <input type="passwor d" id="password1" name='password' onChange={handleChange} placeholder="Enter Password" />
                             <small>Error massage</small>
                         </div>
                         <button type='submit'>Login</button>

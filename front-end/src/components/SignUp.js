@@ -54,7 +54,7 @@ function Signup() {
   return (
     <div className='signin_main '>
     {loading &&
-     <div className="progress">
+     <div className="progress">h1
         <div className="indeterminate"></div>
     </div>
        
@@ -65,26 +65,26 @@ function Signup() {
     }
 
 
-    <div className="container">
+    <div className="my-container">
     <h2> {}</h2>
          <form action="" id="form" onSubmit={handleSubmit}  name="form" className='form'>
            
-            <div className="form-control">
+            <div className="my-form-control">
                 <label>UserName</label>
                 <input type="text" id="username" name='name' value={data.name} onChange={handleChange} placeholder="Enter UserName"/>
                 <small>Error massage</small>
             </div>
-            <div className="form-control">
+            <div className="my-form-control">
                 <label>Email</label>
                 <input type="text" id="email" name='email' value={data.email} onChange={handleChange} placeholder="Enter Email"/>
                 <small>Error massage</small>
             </div>
-            <div className="form-control">
+            <div className="my-form-control">
                 <label>Password</label>
                 <input type="password" id="password" name='password' value={data.password} onChange={handleChange} placeholder="Enter Password"/>
                 <small>Error massage</small>
             </div>
-            <div className="form-control">
+            <div className="my-form-control">
                 <label>Conform Password</label>
                 <input type="password" id="password2" name='cpassword' value={data.cpassword} onChange={handleChange} placeholder="Enter Password"/>
                 <small>Error massage</small>
