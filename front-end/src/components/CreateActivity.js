@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import {createTodo} from '../reducers/todoReducers';
 
 function CreateActivity() {
+  const [typeList, setTypeList] = useState(['Run', 'Bicycle', 'Swim', 'Walk', 'Hike']);
   const [data, setData] = useState({
     discription: "",
     ActivityType: "",
@@ -34,6 +35,7 @@ function CreateActivity() {
   };
 
   return (
+    
     <div className="signin_main ">
       {loading && (
         <div className="progress">
@@ -71,11 +73,13 @@ function CreateActivity() {
           <label htmlFor="ActivityType">Select Activity Type</label>
             <select name="ActivityType"value={data.ActivityType} 
               onChange={handleChange} id="ActivityType" form="form">
-              <option value="bicycle ride">bicycle ride</option>
-              <option value="cycling">cycling</option>
-              <option value="Swimming">Swimming</option>
-              <option value="Hiking">Hiking</option>
-              <option value="Running">Running</option>
+              <option value='' selected>Choose Type</option>
+              {
+                typeList.map((data) => {
+                    return <option value={data}>{data}</option>
+                  
+                })
+              }
             </select>
           </div>
           <div className="my-form-control">

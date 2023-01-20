@@ -5,37 +5,30 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { updateTodo,createTodo } from "../reducers/todoReducers";
 
-export const Modal = ({updatedata}) => {
-    //
-    //
-  const [data, setData] = useState({
+export const Modal = (props) => {
+  const dispatch = useDispatch();
+  const [typeList, setTypeList] = useState(['Run', 'Bicycle', 'Swim', 'Walk', 'Hike']);
+  const { loading, error } = useSelector((state) => state.user);
+  // const [preData, setPreData] = useState('empty');
+  const [preData, setPreData] = useState({
     discription: "",
     ActivityType: "",
     duration: "",
     date: "",
   });
-  //   const addTodo = ()=>{
-  //     dispatch(createTodo({todo:data}))
-  //    }
 
-  useEffect(()=>{
-    console.log("data from Modal:",updatedata);
-    setData(updatedata)
-  },[updatedata])
+  useEffect((e) => {
+    setPreData(props.passUpdatedata);
+  },[props.passUpdatedata])
 
-  const { loading, error } = useSelector((state) => state.user);
+  const handleChange = (event) => {
 
-  const dispatch = useDispatch();
-
-//   const handleChange = (event) => {
-//     setData({ ...data, [event.target.name]: event.target.value });
-//   };
+    setPreData({ ...preData, [event.target.name]: event.target.value });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("data=> from frontend", data);
-
-    // dispatch(createTodo({todo:data}));
-    dispatch(updateTodo({data}));
+    console.log('from modal',preData);
+    dispatch(updateTodo(preData));
     // setData({ discription: "", ActivityType: "", duration: "", date: "" });
   };
 
@@ -84,10 +77,8 @@ export const Modal = ({updatedata}) => {
                         id="aboutActivty"
                         cols="30"
                         rows="10"
-                        value={setData.discription}
-                        // onChange={handleChange}
-                        onChange={(e)=>setData({...updatedata,description:e.target.value})}
-                        // onChange={(e)=>setData({...setData,handleChange})}
+                        value={preData.discription}
+                        onChange={handleChange}
                         placeholder="Please enter activity Description"
                       ></textarea>
                       <small>Error massage</small>
@@ -96,18 +87,20 @@ export const Modal = ({updatedata}) => {
                       <label htmlFor="ActivityType">Select Activity Type</label>
                       <select
                         name="ActivityType"
-                        value={setData.ActivityType}
-                        // onChange={handleChange}
-                        onChange={(e)=>setData({...updatedata,ActivityType:e.target.value})}
-                        // onChange={(e)=>setData({...setData,handleChange})}
+                        value={preData.ActivityType}
+                        onChange={handleChange}
                         id="ActivityType"
                         form="form"
                       >
-                        <option value="bicycle ride" selected>bicycle ride</option>
-                        <option value="cycling">cycling</option>
-                        <option value="Swimming">Swimming</option>
-                        <option value="Hiking">Hiking</option>
-                        <option value="Running">Running</option>
+                        {
+                          typeList.map((data) => {
+                            if(data === preData.ActivityType){
+                              return <option value={preData.ActivityType} selected>{preData.ActivityType}</option>
+                            }else{
+                              return <option value={data}>{data}</option>
+                            }
+                          })
+                        }
                       </select>
                     </div>
                     <div className="my-form-control">
@@ -115,10 +108,8 @@ export const Modal = ({updatedata}) => {
                       <input
                         type="text"
                         name="duration"
-                        value={setData.durationduration}
-                        // onChange={handleChange}
-                        onChange={(e)=>setData({...updatedata,duration:e.target.value})}
-                        // onChange={(e)=>setData({...setData,handleChange})}
+                        value={preData.duration}
+                        onChange={handleChange}
                         id="duration"
                         placeholder="Enter Time In Minutes"
                       />
@@ -128,10 +119,8 @@ export const Modal = ({updatedata}) => {
                       <input
                         type="text"
                         name="date"
-                        value={setData.date}
-                        // onChange={handleChange}
-                        onChange={(e)=>setData({...updatedata,date:e.target.value})}
-                        // onChange={(e)=>setData({...setData,handleChange})}
+                        value={preData.date}
+                        onChange={handleChange}
                         className="date"
                         placeholder="dd/mm/yyyy"
                       />
