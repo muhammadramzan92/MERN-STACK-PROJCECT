@@ -1,6 +1,6 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import {fetch2,fetch3,fetch4} from '../helpers/fetch2'
-const initialState = []
+const initialState = ['empty'];
 
 export const createTodo = createAsyncThunk(
     'user/createtodo',
@@ -20,11 +20,19 @@ export const fetchTodo = createAsyncThunk(
 )
 
 export const updateTodo = createAsyncThunk(
-    // console.log();
-    'upatetodo',
-    async (id)=>{
-       const result =  await fetch4(`/update/${id}`,"update")
-       return result  
+    // "Authorization":localStorage.getItem('token')
+    'todo/updateTodo',
+    async (data, thunkAPI)=>{
+        console.log(data);
+        const dataPass = {
+            method:"post",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify(data)
+        }
+       const result =  await fetch(`/update/${data._id}`,dataPass)
+       return result.json();
     }
 )
 export const deleteTodo = createAsyncThunk(
@@ -53,11 +61,15 @@ const todoReducer = createSlice({
             })
             return removedTodo
         },
-        [updateTodo.fulfilled]:(state,{payload:{message}})=>{
-            const updateTodo =  state.filter(item=>{
-                 return item._id !== message._id
-             })
-              return message
+        [updateTodo.fulfilled]:(state,action)=>{
+            if(action.payload.result){
+                state.push(action.payload.result)
+            }
+           
+            // const updateTodo =  state.filter(item=>{
+            //      return item._id !== message._id
+            //  })
+            //   return message
           //  return message
          }
         // [updateTodo.fulfilled]:(state,{payload:{message}})=>{
