@@ -26,13 +26,12 @@ console.log(e)
   }, []);
 
   let handleUpdate = (e)=>{
-    console.log("updated data",e);
     setupdatedata(e)
   }
 
   return (
 <>
-  <Modal updatedata={updatedata} />
+  <Modal passUpdatedata={updatedata} />
 <h2>"data is coming"</h2>
 {todos.map(e=><div class="card" style={{width: "18rem"}}>
   <div class="card-body">
