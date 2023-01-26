@@ -29,7 +29,7 @@ export default function SignIn() {
       }
     
         const handleSubmit1 = (e) => {
-         
+          e.preventDefault()
        
          
           const {email,password}=logUser

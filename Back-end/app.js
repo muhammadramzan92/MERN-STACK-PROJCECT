@@ -7,16 +7,12 @@ const User=require('./models/User')
 const Todo=require('./models/Todo')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
-// const {MOGOURI} = require('./config/keys')
 const JWT_SECRET='fsdfkdsjfksdljfsdk'
 
 app.use(cors())
 mongoose.set('strictQuery', true);
 
-
 mongoose.connect('mongodb+srv://Ramzan:oYuGxIQ5Ok4A5WCb@cluster0.edivkcm.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser:true,
-
-
  useUnifiedTopology: true}
  )
 
@@ -139,20 +135,14 @@ app.post('/signup',async (req,res)=>{
 
 
      ////
-     app.post('/update/:id', async (req, res) => {
+     app.patch('/update/:id',requireLogin, async (req, res) => {
+        console.log("req.body msg::",req.body)
         try {
-            const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, {$set: req.body});
-                if(updatedTodo){
-                    Todo.find({},(err, result) => {
-                        if(result){
-                            res.status(200).json({
-                                result : result
-                            })
-                        }
-                    });
-                }else{
-                    return res.status(404).json({ message: 'Todo not found' });
-                }
+           
+            // const updatedTodo = await Todo.updateOne({_id: req.params.id}, {$set: req.body},{new: true});
+            const updatedTodo = await Todo.findByIdAndUpdate({_id: req.params.id}, {$set: req.body},{new: true});
+          if(!updatedTodo) return res.status(404).json({ message: 'Todo not found' });
+          res.json(updatedTodo);
         } catch (err) {
           res.status(500).json({ message: err.message });
         }
@@ -170,7 +160,7 @@ if(process.env.NODE_ENV=='production'){
     const path = require('path')
 
     app.get('/',(req,res)=>{
-        app.use(express.static(path.resolve(__dirname,'front-end','build')))
+        app.use(express.static(path.resolve(__dirname,'client','build')))
         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
     })
 }
